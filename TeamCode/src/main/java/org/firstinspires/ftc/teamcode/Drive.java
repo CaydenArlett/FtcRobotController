@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 public class Drive {
@@ -14,5 +15,28 @@ public class Drive {
         Right_Front = hardwareMap.get(DcMotor.class, "rightFront");
         Left_Back = hardwareMap.get(DcMotor.class, "leftBack");
         Right_Back = hardwareMap.get(DcMotor.class, "rightBack");
+        Right_Back.setDirection(DcMotorSimple.Direction.REVERSE);
+        Right_Front.setDirection(DcMotorSimple.Direction.REVERSE);
+    }
+    public void setMode(boolean x){
+        if (x){
+            Left_Front.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+            Right_Front.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+            Left_Back.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+            Right_Back.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        }
+        else{
+            Left_Front.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+            Right_Front.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+            Left_Back.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+            Right_Back.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+        }
+    }
+
+    public void setPower(motorPowers power){
+        this.Left_Front.setPower(power.leftFront);
+        this.Right_Front.setPower(power.rightFront);
+        this.Left_Back.setPower(power.leftBack);
+        this.Right_Back.setPower(power.rightBack);
     }
 }

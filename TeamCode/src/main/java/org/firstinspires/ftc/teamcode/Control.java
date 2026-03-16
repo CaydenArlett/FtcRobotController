@@ -2,26 +2,27 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 
-static double trigerLeft = 0.1;
-static double trigerRight = 0.1;
+public class Control {
+    static double trigerLeft = 0.1;
+    static double trigerRight = 0.1;
+    static double leftStick = 0.07;
+    static double rightStick = 0.07;
+    private OpMode opMode;
 
-static double leftStick = 0.1;
-static double rightStick = 0.1;
-
-public class Controller {
-    private OpMode opMode
-    public Controller(OpMode x){
+    private Drive drive;
+    public Control(OpMode x, Drive b){
         opMode = x;
+        drive = b;
     }
     public motorPowers getPower() {
         double x = 0;
         double y = 0;
         double rotate = 0;
         if (opMode.gamepad1.left_trigger > trigerLeft){
-            x-=opMode.gamepad1.left_stick_x;
+            y-=opMode.gamepad1.left_trigger;
         }
         if (opMode.gamepad1.right_trigger > trigerRight){
-            x+=opMode.gamepad1.right_stick_x;
+            y+=opMode.gamepad1.right_trigger;
         }
         if (opMode.gamepad1.left_bumper){
             rotate --;
@@ -29,12 +30,18 @@ public class Controller {
         if (opMode.gamepad1.right_bumper){
             rotate ++;
         }
-        if (opMode.gamepad1.left_stick_y > leftStick || opMode.gamepad1.left_stick_x > leftStick){
+        if (Math.abs(opMode.gamepad1.left_stick_y) > leftStick || Math.abs(opMode.gamepad1.left_stick_x) > leftStick){
             x+=opMode.gamepad1.left_stick_x;
-            y+=opMode.gamepad1.left_stick_y;
+            y-=opMode.gamepad1.left_stick_y;
         }
-        if (opMode.gamepad1.right_stick_y > rightStick || opMode.gamepad1.right_stick_x > rightStick) {
+        if (Math.abs(opMode.gamepad1.right_stick_y) > rightStick || Math.abs(opMode.gamepad1.right_stick_x) > rightStick) {
             rotate += opMode.gamepad1.right_stick_x;
+        }
+        if (opMode.gamepad1.y){
+            drive.setMode(true);
+        }
+        if (opMode.gamepad1.x){
+            drive.setMode(false);
         }
 
         return setPower(x, y, rotate);
