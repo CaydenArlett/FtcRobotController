@@ -10,9 +10,11 @@ public class Control {
     private OpMode opMode;
 
     private Drive drive;
-    public Control(OpMode x, Drive b){
+    private Shoot shoot;
+    public Control(OpMode x, Drive b, Shoot c){
         opMode = x;
         drive = b;
+        shoot = c;
     }
     public motorPowers getPower() {
         double x = 0;
@@ -43,7 +45,37 @@ public class Control {
         if (opMode.gamepad1.x){
             drive.setMode(false);
         }
-
+        if (opMode.gamepad1.dpad_right){
+            if (opMode.gamepad1.dpad_down){
+                shoot.targetV = 0.89;
+            }
+            else if (!opMode.gamepad1.dpad_up){
+                shoot.targetV = 0.92;
+            }
+        }
+        else if (opMode.gamepad1.dpad_left){
+            if (opMode.gamepad1.dpad_up){
+                shoot.targetV = 0.83;
+            }
+            else if (!opMode.gamepad1.dpad_down){
+                shoot.targetV = 0.8;
+            }
+        }
+        else if (opMode.gamepad1.dpad_up){
+            shoot.targetV = 0.86;
+        }
+        if (opMode.gamepad1.dpad_down && opMode.gamepad1.dpad_left){
+            drive.intake1(1);
+        }
+        else drive.intake1(0);
+        if (opMode.gamepad1.dpad_down && opMode.gamepad1.dpad_right){
+            drive.intake2(1);
+            drive.intake1(1);
+        }
+        if (opMode.gamepad1.dpad_down && !opMode.gamepad1.dpad_right && !opMode.gamepad1.dpad_left){
+            shoot.targetV = 0;
+        }
+        else drive.intake2(0);
         return setPower(x, y, rotate);
     }
     public motorPowers setPower(double x, double y, double rotate) {
