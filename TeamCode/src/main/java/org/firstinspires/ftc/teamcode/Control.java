@@ -40,10 +40,10 @@ public class Control {
             rotate += opMode.gamepad1.right_stick_x;
         }
         if (opMode.gamepad1.y){
-            drive.setMode(true);
+            drive.setBrake(true);
         }
         if (opMode.gamepad1.x){
-            drive.setMode(false);
+            drive.setBrake(false);
         }
         if (opMode.gamepad1.dpad_right){
             if (opMode.gamepad1.dpad_down){
