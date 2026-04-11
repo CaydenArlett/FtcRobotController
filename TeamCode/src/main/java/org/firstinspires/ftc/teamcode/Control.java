@@ -3,8 +3,8 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 
 public class Control {
-    static double trigerLeft = 0.1;
-    static double trigerRight = 0.1;
+    static double triggerLeft = 0.1;
+    static double triggerRight = 0.1;
     static double leftStick = 0.07;
     static double rightStick = 0.07;
     private OpMode opMode;
@@ -16,14 +16,18 @@ public class Control {
         drive = b;
         shoot = c;
     }
+    public Control(OpMode x, Drive b){
+        opMode = x;
+        drive = b;
+    }
     public motorPowers getPower() {
         double x = 0;
         double y = 0;
         double rotate = 0;
-        if (opMode.gamepad1.left_trigger > trigerLeft){
+        if (opMode.gamepad1.left_trigger > triggerLeft){
             y-=opMode.gamepad1.left_trigger;
         }
-        if (opMode.gamepad1.right_trigger > trigerRight){
+        if (opMode.gamepad1.right_trigger > triggerRight){
             y+=opMode.gamepad1.right_trigger;
         }
         if (opMode.gamepad1.left_bumper){
@@ -45,37 +49,37 @@ public class Control {
         if (opMode.gamepad1.x){
             drive.setBrake(false);
         }
-        if (opMode.gamepad1.dpad_right){
-            if (opMode.gamepad1.dpad_down){
-                shoot.targetV = 0.89;
-            }
-            else if (!opMode.gamepad1.dpad_up){
-                shoot.targetV = 0.92;
-            }
-        }
-        else if (opMode.gamepad1.dpad_left){
-            if (opMode.gamepad1.dpad_up){
-                shoot.targetV = 0.83;
-            }
-            else if (!opMode.gamepad1.dpad_down){
-                shoot.targetV = 0.8;
-            }
-        }
-        else if (opMode.gamepad1.dpad_up){
-            shoot.targetV = 0.86;
-        }
-        if (opMode.gamepad1.dpad_down && opMode.gamepad1.dpad_left){
-            drive.intake1(1);
-        }
-        else drive.intake1(0);
-        if (opMode.gamepad1.dpad_down && opMode.gamepad1.dpad_right){
-            drive.intake2(1);
-            drive.intake1(1);
-        }
-        if (opMode.gamepad1.dpad_down && !opMode.gamepad1.dpad_right && !opMode.gamepad1.dpad_left){
-            shoot.targetV = 0;
-        }
-        else drive.intake2(0);
+//        if (opMode.gamepad1.dpad_right){
+//            if (opMode.gamepad1.dpad_down){
+//                shoot.targetV = 0.89;
+//            }
+//            else if (!opMode.gamepad1.dpad_up){
+//                shoot.targetV = 0.92;
+//            }
+//        }
+//        else if (opMode.gamepad1.dpad_left){
+//            if (opMode.gamepad1.dpad_up){
+//                shoot.targetV = 0.83;
+//            }
+//            else if (!opMode.gamepad1.dpad_down){
+//                shoot.targetV = 0.8;
+//            }
+//        }
+//        else if (opMode.gamepad1.dpad_up){
+//            shoot.targetV = 0.86;
+//        }
+//        if (opMode.gamepad1.dpad_down && opMode.gamepad1.dpad_left){
+//            drive.intake1(1);
+//        }
+//        else drive.intake1(0);
+//        if (opMode.gamepad1.dpad_down && opMode.gamepad1.dpad_right){
+//            drive.intake2(1);
+//            drive.intake1(1);
+//        }
+//        if (opMode.gamepad1.dpad_down && !opMode.gamepad1.dpad_right && !opMode.gamepad1.dpad_left){
+//            shoot.targetV = 0;
+//        }
+//        else drive.intake2(0);
         return setPower(x, y, rotate);
     }
     public motorPowers setPower(double x, double y, double rotate) {

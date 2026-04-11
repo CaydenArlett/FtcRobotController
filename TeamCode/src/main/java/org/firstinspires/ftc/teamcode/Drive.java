@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
@@ -11,11 +12,14 @@ public class Drive {
     DcMotor Left_Back;
     DcMotor Right_Back;
 
+    Servo Launcher;
+
     public Drive(HardwareMap hardwareMap){
         Left_Front = hardwareMap.get(DcMotor.class, "leftFront");
         Right_Front = hardwareMap.get(DcMotor.class, "rightFront");
         Left_Back = hardwareMap.get(DcMotor.class, "leftBack");
         Right_Back = hardwareMap.get(DcMotor.class, "rightBack");
+        Launcher = hardwareMap.get(Servo.class, "launcher");
 
         //initialise wheels
         Right_Back.setDirection(DcMotorSimple.Direction.REVERSE);
@@ -42,5 +46,9 @@ public class Drive {
         this.Right_Front.setPower(power.rightFront);
         this.Left_Back.setPower(power.leftBack);
         this.Right_Back.setPower(power.rightBack);
+    }
+
+    public void setPos(double pos) {
+        Launcher.setPosition(pos);
     }
 }
