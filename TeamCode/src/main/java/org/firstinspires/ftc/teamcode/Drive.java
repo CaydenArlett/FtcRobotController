@@ -1,16 +1,20 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 public class Drive {
-
     DcMotor Left_Front;
     DcMotor Right_Front;
     DcMotor Left_Back;
     DcMotor Right_Back;
+
+    Servo Launcher;
+
+    public Drive(HardwareMap hardwareMap){
     DcMotorEx slideMotor;
 
     private double resetPower = 0.5;
@@ -25,16 +29,15 @@ public class Drive {
         Right_Front = hardwareMap.get(DcMotor.class, "rightFront");
         Left_Back = hardwareMap.get(DcMotor.class, "leftBack");
         Right_Back = hardwareMap.get(DcMotor.class, "rightBack");
+        Launcher = hardwareMap.get(Servo.class, "launcher");
+
+        //initialise wheels
         Right_Back.setDirection(DcMotorSimple.Direction.REVERSE);
         Right_Front.setDirection(DcMotorSimple.Direction.REVERSE);
-        DcMotorEx slideMotor = hardwareMap.get(DcMotorEx.class, "slideMotor");
-        slideMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        slideMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        slideMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
     }
 
-    public void setMode(boolean x) {
-        if (x) {
+    public void setBrake(boolean x){
+        if (x){
             Left_Front.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
             Right_Front.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
             Left_Back.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -67,5 +70,7 @@ public class Drive {
         } else if (armReset){
             this.slideMotor.setPower(resetPower);
         }
+    public void setPos(double pos) {
+        Launcher.setPosition(pos);
     }
 }

@@ -3,8 +3,8 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 
 public class Control {
-    static double trigerLeft = 0.1;
-    static double trigerRight = 0.1;
+    static double triggerLeft = 0.1;
+    static double triggerRight = 0.1;
     static double leftStick = 0.07;
     static double rightStick = 0.07;
     private OpMode opMode;
@@ -13,14 +13,18 @@ public class Control {
         opMode = x;
         drive = b;
     }
+    public Control(OpMode x, Drive b){
+        opMode = x;
+        drive = b;
+    }
     public motorPowers getPower() {
         double x = 0;
         double y = 0;
         double rotate = 0;
-        if (opMode.gamepad1.left_trigger > trigerLeft){
+        if (opMode.gamepad1.left_trigger > triggerLeft){
             y-=opMode.gamepad1.left_trigger;
         }
-        if (opMode.gamepad1.right_trigger > trigerRight){
+        if (opMode.gamepad1.right_trigger > triggerRight){
             y+=opMode.gamepad1.right_trigger;
         }
         if (opMode.gamepad1.left_bumper){
@@ -37,7 +41,7 @@ public class Control {
             rotate += opMode.gamepad1.right_stick_x;
         }
         if (opMode.gamepad1.y){
-            drive.setMode(true);
+            drive.setBrake(true);
         }
         if (opMode.gamepad1.x){
             drive.setMode(false);
