@@ -118,15 +118,12 @@ public class InfCycleBlue extends OpMode {
                 PedroFunctions.intake(robot);
                 break;
             case PICKLOAD_RECOIL:
-                PedroFunctions.intake(robot);
                 follower.followPath(pickLoadEndToRec, true);
                 break;
             case PICKLOAD_RETURN:
-                PedroFunctions.intake(robot);
                 follower.followPath(pickLoadRecToPickLoadEnd, true);
                 break;
             case PICKLOAD_END_TO_SHOOT:
-                PedroFunctions.reset(robot);
                 follower.followPath(pickLoadEndToShoot, true);
                 break;
             case AIM:

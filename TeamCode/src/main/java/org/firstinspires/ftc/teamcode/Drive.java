@@ -11,53 +11,61 @@ public class Drive {
     DcMotor Right_Front;
     DcMotor Left_Back;
     DcMotor Right_Back;
-    DcMotor Intake_Motor1;
-    DcMotor Intake_Motor2;
-    DcMotorEx Shoot_Motor;
-    public Drive(HardwareMap hardwareMap){
+    DcMotorEx slideMotor;
+
+    private double resetPower = 0.5;
+
+    private double slidePower = 0.5;
+    public boolean armReset = false;
+
+    public boolean switchPressed = false;
+
+    public Drive(HardwareMap hardwareMap) {
         Left_Front = hardwareMap.get(DcMotor.class, "leftFront");
         Right_Front = hardwareMap.get(DcMotor.class, "rightFront");
         Left_Back = hardwareMap.get(DcMotor.class, "leftBack");
         Right_Back = hardwareMap.get(DcMotor.class, "rightBack");
-        Intake_Motor1 = hardwareMap.get(DcMotor.class, "intakeMotor1");
-        Intake_Motor2 = hardwareMap.get(DcMotor.class, "intakeMotor2");
-        Shoot_Motor = hardwareMap.get(DcMotorEx.class, "shootMotor");
         Right_Back.setDirection(DcMotorSimple.Direction.REVERSE);
         Right_Front.setDirection(DcMotorSimple.Direction.REVERSE);
-        Intake_Motor1.setDirection(DcMotorSimple.Direction.REVERSE);
-        Intake_Motor2.setDirection(DcMotorSimple.Direction.REVERSE);
-        Shoot_Motor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+        DcMotorEx slideMotor = hardwareMap.get(DcMotorEx.class, "slideMotor");
+        slideMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        slideMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        slideMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
     }
-    public void setMode(boolean x){
-        if (x){
+
+    public void setMode(boolean x) {
+        if (x) {
             Left_Front.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
             Right_Front.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
             Left_Back.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
             Right_Back.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        }
-        else{
+        } else {
             Left_Front.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
             Right_Front.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
             Left_Back.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
             Right_Back.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
         }
     }
-
-    public void setPower(motorPowers power){
+    public void setPower(motorPowers power) {
         this.Left_Front.setPower(power.leftFront);
         this.Right_Front.setPower(power.rightFront);
         this.Left_Back.setPower(power.leftBack);
         this.Right_Back.setPower(power.rightBack);
     }
 
-    public void shoot(double power){
-        this.Shoot_Motor.setPower(power);
+    public void moveArm(int targetPos) {
+        slideMotor.setTargetPosition(targetPos); // Ticks
+        slideMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        slideMotor.setPower(slidePower);
     }
 
-    public void intake1(double power){
-        this.Intake_Motor1.setPower(power*0.7);
-    }
-    public void intake2(double power){
-        this.Intake_Motor2.setPower(power*0.7);
+    public void updateArm() {
+        if (switchPressed) {
+            this.slideMotor.setPower(0);
+            slideMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            slideMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        } else if (armReset){
+            this.slideMotor.setPower(resetPower);
+        }
     }
 }
