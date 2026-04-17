@@ -64,12 +64,14 @@ public class Drive {
         this.Right_Back.setPower(power.rightBack);
     }
 
-    public void moveArm(int targetPos) {
-        slideMotor.setTargetPosition(targetPos); // Ticks
+    //moves arm to a desired pos
+    public void moveArm(double targetPos) {
+        slideMotor.setTargetPosition((int)targetPos); // Ticks
         slideMotor.setPower(slidePower);
-        slideMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
     }
 
+
+    //resets arm encoder
     public void updateArm() {
         if (resetMode) {
             this.slideMotor.setPower(-0.2);
