@@ -31,4 +31,18 @@ public class ArmControl {
         }
         return slidePower;
     }
+    public void loop() {
+        if (gamepad1.a && gamepad1.b) {
+            telemetry.addData("helo", true);
+            launch.setServoPos(0.5);
+        } else if (gamepad1.a) {
+            telemetry.addData("pressedA", true);
+            launch.setServoPos(-1.0);
+        } else if (gamepad1.b) {
+            telemetry.addData("Press", true);
+            launch.setServoPos(0.0);
+        } else {
+            telemetry.addData("Pressed", true);
+            launch.setServoPos(1.0);
+        }
 }
