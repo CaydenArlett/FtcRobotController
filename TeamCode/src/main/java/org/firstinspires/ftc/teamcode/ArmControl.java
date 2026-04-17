@@ -7,17 +7,28 @@ import org.firstinspires.ftc.teamcode.Drive;
 
 public class ArmControl {
     private OpMode opMode;
-    private double pos;
+    private double latchPos;
+    private double slidePower;
     // under construction
     public ArmControl(OpMode o) {
         opMode = o;
     }
-    public double getPos() {
-        if (opMode.gamepad2.x) {
-            pos = 0.5;
+    public double getLatchPos() {
+        if (opMode.gamepad2.dpad_right) {
+            latchPos = 0.5;
         } else {
-            pos = 0;
+            latchPos = 0;
         } // if x pressed release else stay clamped
-        return pos;
+        return latchPos;
+    }
+    public double getSlidePos() {
+        if (opMode.gamepad2.dpad_up) {
+            slidePower = 0.2;
+        } else if (opMode.gamepad2.dpad_down) {
+            slidePower = 0.2;
+        } else {
+            slidePower = 0;
+        }
+        return slidePower;
     }
 }

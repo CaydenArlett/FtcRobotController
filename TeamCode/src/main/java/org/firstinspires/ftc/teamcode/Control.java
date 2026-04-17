@@ -13,10 +13,6 @@ public class Control {
         opMode = x;
         drive = b;
     }
-    public Control(OpMode x, Drive b){
-        opMode = x;
-        drive = b;
-    }
     public motorPowers getPower() {
         double x = 0;
         double y = 0;
@@ -43,9 +39,9 @@ public class Control {
         if (opMode.gamepad1.y){
             drive.setBrake(true);
         }
-        if (opMode.gamepad1.x){
-            drive.setMode(false);
-        }
+//        if (opMode.gamepad1.x){
+//            drive.setMode(false);
+//        }
         drive.armReset = opMode.gamepad1.a;
         return setPower(x, y, rotate);
     }

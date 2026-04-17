@@ -21,7 +21,7 @@ public class Teleop extends OpMode {
         motorPowers power = controler.getPower();
         bot.setPower(power);
         bot.updateArm();
-        bot.setPos(shoot.getPos());
+        bot.setPos(shoot.getLatchPos());
         //shoot.spin();
     }
 }
