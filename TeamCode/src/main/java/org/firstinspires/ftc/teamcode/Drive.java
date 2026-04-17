@@ -17,12 +17,18 @@ public class Drive {
 
     DcMotorEx slideMotor;
 
+    private double distance;
+
+    private double checkTicks;
+
+    private double checkCount;
     private double resetPower = 0.5;
 
     private double slidePower = 0.5;
     public boolean armReset = false;
 
-    public boolean switchPressed = false;
+
+    public boolean resetMode = false;
 
 
     public Drive(HardwareMap hardwareMap) {
@@ -65,12 +71,26 @@ public class Drive {
     }
 
     public void updateArm() {
-        if (switchPressed) {
-            this.slideMotor.setPower(0);
-            slideMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-            slideMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        } else if (armReset) {
-            this.slideMotor.setPower(resetPower);
+        if (resetMode) {
+            this.slideMotor.setPower(-0.2);
+            if (distance > 0.7) {
+                checkTicks++;
+                if (checkTicks > checkCount) {
+                    slideMotor.setPower(0);
+                    slideMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+                    slideMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+                }
+            }
+            else if (distance > 0.5) {
+                if (checkTicks > 0){
+                    checkTicks--;
+                }
+                this.slideMotor.setPower(-0.01);
+            }
+            else if (distance > 0) {
+                checkTicks = 0;
+                this.slideMotor.setPower(-0.1);
+            }
         }
     }
     public void setPos(double pos) {
