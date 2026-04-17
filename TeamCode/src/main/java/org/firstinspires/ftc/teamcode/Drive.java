@@ -14,7 +14,7 @@ public class Drive {
 
     Servo Launcher;
 
-    public Drive(HardwareMap hardwareMap){
+
     DcMotorEx slideMotor;
 
     private double resetPower = 0.5;
@@ -24,12 +24,14 @@ public class Drive {
 
     public boolean switchPressed = false;
 
+
     public Drive(HardwareMap hardwareMap) {
         Left_Front = hardwareMap.get(DcMotor.class, "leftFront");
         Right_Front = hardwareMap.get(DcMotor.class, "rightFront");
         Left_Back = hardwareMap.get(DcMotor.class, "leftBack");
         Right_Back = hardwareMap.get(DcMotor.class, "rightBack");
         Launcher = hardwareMap.get(Servo.class, "launcher");
+        slideMotor = hardwareMap.get(DcMotorEx.class, "slideMotor");
 
         //initialise wheels
         Right_Back.setDirection(DcMotorSimple.Direction.REVERSE);
@@ -58,8 +60,8 @@ public class Drive {
 
     public void moveArm(int targetPos) {
         slideMotor.setTargetPosition(targetPos); // Ticks
-        slideMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         slideMotor.setPower(slidePower);
+        slideMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
     }
 
     public void updateArm() {
@@ -67,9 +69,10 @@ public class Drive {
             this.slideMotor.setPower(0);
             slideMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
             slideMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        } else if (armReset){
+        } else if (armReset) {
             this.slideMotor.setPower(resetPower);
         }
+    }
     public void setPos(double pos) {
         Launcher.setPosition(pos);
     }
