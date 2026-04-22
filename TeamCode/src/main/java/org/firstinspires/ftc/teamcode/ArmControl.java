@@ -25,7 +25,7 @@ public class ArmControl {
         if (opMode.gamepad2.dpad_up) {
             slidePower = 0.2;
         } else if (opMode.gamepad2.dpad_down) {
-            slidePower = 0.2;
+            slidePower = -0.2;
         } else {
             slidePower = 0;
         }

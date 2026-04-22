@@ -67,7 +67,9 @@ public class Drive {
     //moves arm to a desired pos
     public void moveArm(double targetPos) {
         slideMotor.setTargetPosition((int)targetPos); // Ticks
+        slideMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         slideMotor.setPower(slidePower);
+
     }
 
 
