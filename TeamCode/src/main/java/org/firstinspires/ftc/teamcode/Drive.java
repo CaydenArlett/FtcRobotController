@@ -1,12 +1,16 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.hardware.gobilda.GoBildaPinpointDriver;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
+import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
+
 public class Drive {
+    GoBildaPinpointDriver pinpoint;
     DcMotor Left_Front;
     DcMotor Right_Front;
     DcMotor Left_Back;
@@ -30,8 +34,11 @@ public class Drive {
 
     public boolean resetMode = false;
 
+    private final int xDist = 0; //horizontal distance from center of rotation to forward backward deadwheel (mm)
+    private final int yDist = 0; //horizontal distance from center of rotation to left right deadwheel (mm)
 
     public Drive(HardwareMap hardwareMap) {
+        pinpoint = hardwareMap.get(GoBildaPinpointDriver.class, "pinpoint");
         Left_Front = hardwareMap.get(DcMotor.class, "leftFront");
         Right_Front = hardwareMap.get(DcMotor.class, "rightFront");
         Left_Back = hardwareMap.get(DcMotor.class, "leftBack");
@@ -42,6 +49,12 @@ public class Drive {
         //initialise wheels
         Right_Back.setDirection(DcMotorSimple.Direction.REVERSE);
         Right_Front.setDirection(DcMotorSimple.Direction.REVERSE);
+
+        // init odometry
+        pinpoint.setOffsets(xDist, yDist, DistanceUnit.MM);
+        pinpoint.setEncoderResolution(GoBildaPinpointDriver.GoBildaOdometryPods.goBILDA_4_BAR_POD);
+        pinpoint.setEncoderDirections(GoBildaPinpointDriver.EncoderDirection.FORWARD, GoBildaPinpointDriver.EncoderDirection.FORWARD);
+        pinpoint.resetPosAndIMU();
     }
 
     public void setBrake(boolean x){
