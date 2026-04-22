@@ -7,42 +7,39 @@ import org.firstinspires.ftc.teamcode.Drive;
 
 public class ArmControl {
     private OpMode opMode;
+    private Drive robot;
     private double latchPos;
-    private double slidePower;
+    private double leftClawPos;
+    private double rightClawPos;
     // under construction
-    public ArmControl(OpMode o) {
+    public ArmControl(OpMode o, Drive r) {
         opMode = o;
+        robot = r;
     }
     public double getLatchPos() {
-        if (opMode.gamepad2.dpad_right) {
+        if (opMode.gamepad2.left_trigger > 0.5) {
             latchPos = 0.5;
         } else {
             latchPos = 0;
         } // if x pressed release else stay clamped
         return latchPos;
     }
-    public double getSlidePos() {
-        if (opMode.gamepad2.dpad_up) {
-            slidePower = 0.2;
-        } else if (opMode.gamepad2.dpad_down) {
-            slidePower = -0.2;
+
+    // im not actually sure what the actual values for closed and open are but we can always program that later
+    public double getLeftClawPos() {
+        if (opMode.gamepad2.left_bumper) {
+            leftClawPos = 0.5;
         } else {
-            slidePower = 0;
+            leftClawPos = 0;
         }
-        return slidePower;
+        return leftClawPos;
     }
-    public void loop() {
-        if (gamepad1.a && gamepad1.b) {
-            telemetry.addData("helo", true);
-            launch.setServoPos(0.5);
-        } else if (gamepad1.a) {
-            telemetry.addData("pressedA", true);
-            launch.setServoPos(-1.0);
-        } else if (gamepad1.b) {
-            telemetry.addData("Press", true);
-            launch.setServoPos(0.0);
+    public double getRightClawPos() {
+        if (opMode.gamepad2.right_bumper) {
+            rightClawPos = 0.5;
         } else {
-            telemetry.addData("Pressed", true);
-            launch.setServoPos(1.0);
+            rightClawPos = 1;
         }
+        return rightClawPos;
+    }
 }

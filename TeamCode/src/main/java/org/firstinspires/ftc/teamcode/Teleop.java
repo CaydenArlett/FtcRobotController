@@ -7,13 +7,12 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 public class Teleop extends OpMode {
     Drive bot;
     Control controler;
-    ArmControl shoot;
-    //Shoot shoot;
+    ArmControl arm;
+    //Shoot arm;
     @Override
     public void init(){
         bot = new Drive(hardwareMap);
-        shoot = new ArmControl(this);
-        controler = new Control(this, bot);
+        arm = new ArmControl(this, bot);
         controler = new Control(this, bot);
     }
     @Override
@@ -21,7 +20,9 @@ public class Teleop extends OpMode {
         motorPowers power = controler.getPower();
         bot.setPower(power);
         bot.updateArm();
-        bot.setPos(shoot.getLatchPos());
-        //shoot.spin();
+        bot.setLatch(arm.getLatchPos());
+        bot.setClawLeft(arm.getLeftClawPos());
+        bot.setClawRight(arm.getRightClawPos());
+        //arm.spin();
     }
 }

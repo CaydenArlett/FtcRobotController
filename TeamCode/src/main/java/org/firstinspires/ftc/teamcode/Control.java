@@ -44,19 +44,19 @@ public class Control {
         // extends arm
         if (opMode.gamepad1.dpad_down && opMode.gamepad1.dpad_right) {
             drive.moveArm(armExtendPos);     // 100%
-        } else if (opMode.gamepad1.dpad_right) {
+        } else if (opMode.gamepad2.dpad_right) {
             drive.moveArm(armExtendPos * 0.875);   // 87.5%
-        } else if (opMode.gamepad1.dpad_up && opMode.gamepad1.dpad_right) {
+        } else if (opMode.gamepad2.dpad_up && opMode.gamepad1.dpad_right) {
             drive.moveArm(armExtendPos * 0.75);    // 75%
-        } else if (opMode.gamepad1.dpad_up) {
+        } else if (opMode.gamepad2.dpad_up) {
             drive.moveArm(armExtendPos * 0.625);   // 62.5%
-        } else if (opMode.gamepad1.dpad_up && opMode.gamepad1.dpad_left) {
+        } else if (opMode.gamepad2.dpad_up && opMode.gamepad1.dpad_left) {
             drive.moveArm(armExtendPos * 0.50);    // 50%
-        } else if (opMode.gamepad1.dpad_left) {
+        } else if (opMode.gamepad2.dpad_left) {
             drive.moveArm(armExtendPos * 0.375);   // 37.5%
-        } else if (opMode.gamepad1.dpad_down && opMode.gamepad1.dpad_left) {
+        } else if (opMode.gamepad2.dpad_down && opMode.gamepad1.dpad_left) {
             drive.moveArm(armExtendPos * 0.25);    // 25%
-        } else if (opMode.gamepad1.dpad_down) {
+        } else if (opMode.gamepad2.dpad_down) {
             drive.moveArm(0);                      // 0%
         }
 //        if (opMode.gamepad1.x){

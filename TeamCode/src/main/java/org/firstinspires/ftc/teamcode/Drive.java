@@ -18,6 +18,8 @@ public class Drive {
 
     Servo Launcher;
 
+    Servo clawLeft;
+    Servo clawRight;
 
     DcMotorEx slideMotor;
 
@@ -45,6 +47,8 @@ public class Drive {
         Right_Back = hardwareMap.get(DcMotor.class, "rightBack");
         Launcher = hardwareMap.get(Servo.class, "launcher");
         slideMotor = hardwareMap.get(DcMotorEx.class, "slideMotor");
+        clawLeft = hardwareMap.get(Servo.class, "clawLeft");
+        clawRight = hardwareMap.get(Servo.class, "clawRight");
 
         //initialise wheels
         Right_Back.setDirection(DcMotorSimple.Direction.REVERSE);
@@ -110,7 +114,11 @@ public class Drive {
             }
         }
     }
-    public void setPos(double pos) {
+    public void setLatch(double pos) {
         Launcher.setPosition(pos);
     }
+
+    public void setClawLeft(double pos) { clawLeft.setPosition(pos); }
+
+    public void setClawRight(double pos) { clawRight.setPosition(pos); }
 }

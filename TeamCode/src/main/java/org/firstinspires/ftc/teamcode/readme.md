@@ -10,7 +10,12 @@ To-do:
     - Linear arm
 - Make claw code
 - Code pinpoint (position of robot on the field)
+  - Specifically, measure the x and y distances as shown in Drive.java
+  - Then implement pinpoint into autos
 - More detailed autonomous (laucher & armcode)
+- Add clawLeft and clawRight to configuration
+- I think I named the slide motor "launcher" in the config so change that to slideMotor
+- program servos
 
 ### Notice anything missing from the to-do and completed? Please add them on the list.
 If you are currently working on an aspect of this code, please write your name near it
