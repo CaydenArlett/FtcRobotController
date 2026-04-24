@@ -19,11 +19,8 @@ public class Control {
         double x = 0;
         double y = 0;
         double rotate = 0;
-        if (opMode.gamepad1.left_trigger > triggerLeft){
-            y-=opMode.gamepad1.left_trigger;
-        }
-        if (opMode.gamepad1.right_trigger > triggerRight){
-            y+=opMode.gamepad1.right_trigger;
+        if (opMode.gamepad1.left_stick_y < -0.1 || opMode.gamepad1.left_stick_y > 0.1){
+            y+=opMode.gamepad1.left_stick_y;
         }
         if (opMode.gamepad1.left_bumper){
             rotate --;
@@ -42,7 +39,7 @@ public class Control {
             drive.setBrake(true);
         }
         // extends arm
-        if (opMode.gamepad1.dpad_down && opMode.gamepad1.dpad_right) {
+        if (opMode.gamepad2.dpad_down && opMode.gamepad2.dpad_right) {
             drive.moveArm(armExtendPos);     // 100%
         } else if (opMode.gamepad2.dpad_right) {
             drive.moveArm(armExtendPos * 0.875);   // 87.5%

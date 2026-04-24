@@ -17,7 +17,7 @@ public class ArmControl {
         robot = r;
     }
     public double getLatchPos() {
-        if (opMode.gamepad2.left_trigger > 0.5) {
+        if (opMode.gamepad2.x) {
             latchPos = 0.5;
         } else {
             latchPos = 0;
