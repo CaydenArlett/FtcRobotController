@@ -8,7 +8,7 @@ import org.firstinspires.ftc.teamcode.Drive;
 public class ArmControl {
     private OpMode opMode;
     private Drive robot;
-    private double latchPos;
+    private double latchPower;
     private double leftClawPos;
     private double rightClawPos;
     // under construction
@@ -16,13 +16,13 @@ public class ArmControl {
         opMode = o;
         robot = r;
     }
-    public double getLatchPos() {
+    public double getLatchPower() {
         if (opMode.gamepad2.x) {
-            latchPos = 0.5;
+            latchPower = -0.5;
         } else {
-            latchPos = 0;
+            latchPower = 0;
         } // if x pressed release else stay clamped
-        return latchPos;
+        return latchPower;
     }
 
     // im not actually sure what the actual values for closed and open are but we can always program that later

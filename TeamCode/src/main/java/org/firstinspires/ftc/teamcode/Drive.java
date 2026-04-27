@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.hardware.gobilda.GoBildaPinpointDriver;
+import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
@@ -16,7 +17,7 @@ public class Drive {
     DcMotor Left_Back;
     DcMotor Right_Back;
 
-    Servo Launcher;
+    CRServo Launcher;
 
     Servo clawLeft;
     Servo clawRight;
@@ -45,7 +46,7 @@ public class Drive {
         Right_Front = hardwareMap.get(DcMotor.class, "rightFront");
         Left_Back = hardwareMap.get(DcMotor.class, "leftBack");
         Right_Back = hardwareMap.get(DcMotor.class, "rightBack");
-        Launcher = hardwareMap.get(Servo.class, "launcher");
+        Launcher = hardwareMap.get(CRServo.class, "launcher");
         slideMotor = hardwareMap.get(DcMotorEx.class, "slideMotor");
 //        clawLeft = hardwareMap.get(Servo.class, "clawLeft");
 //        clawRight = hardwareMap.get(Servo.class, "clawRight");
@@ -53,6 +54,7 @@ public class Drive {
         //initialise wheels
         Right_Back.setDirection(DcMotorSimple.Direction.REVERSE);
         Right_Front.setDirection(DcMotorSimple.Direction.REVERSE);
+        slideMotor.setDirection(DcMotorSimple.Direction.REVERSE);
 
         // init odometry
         pinpoint.setOffsets(xDist, yDist, DistanceUnit.MM);
@@ -114,9 +116,10 @@ public class Drive {
             }
         }
     }
-//    public void setLatch(double pos) {
-//        Launcher.setPosition(pos);
-//    }
+
+    public void spinLatch(double pos) {
+        Launcher.setPower(pos);
+    }
 //
 //    public void setClawLeft(double pos) { clawLeft.setPosition(pos); }
 //
