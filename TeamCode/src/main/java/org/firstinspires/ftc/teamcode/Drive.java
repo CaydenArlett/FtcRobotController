@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode;
 
+import static com.qualcomm.robotcore.hardware.DcMotor.RunMode.RUN_USING_ENCODER;
+
 import com.qualcomm.hardware.gobilda.GoBildaPinpointDriver;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -22,6 +24,9 @@ public class Drive {
     Servo clawLeft;
     Servo clawRight;
 
+    Servo clawUp;
+
+
     DcMotorEx slideMotor;
 
     private double distance;
@@ -33,6 +38,25 @@ public class Drive {
 
     private double slidePower = 0.5;
     public boolean armReset = false;
+
+    private boolean leftState = false;
+
+    private boolean rightState = false;
+
+    private boolean upState = false;
+
+    private double rightStart = 0;
+
+    private double rightEnd = 0.5;
+
+    private double upStart = 0;
+
+    private double upEnd = 0.5;
+
+    private double leftStart = 0.5;
+
+    private double leftEnd = 0;
+
 
 
     public boolean resetMode = false;
@@ -48,9 +72,15 @@ public class Drive {
         Right_Back = hardwareMap.get(DcMotor.class, "rightBack");
         Launcher = hardwareMap.get(CRServo.class, "launcher");
         slideMotor = hardwareMap.get(DcMotorEx.class, "slideMotor");
-//        clawLeft = hardwareMap.get(Servo.class, "clawLeft");
-//        clawRight = hardwareMap.get(Servo.class, "clawRight");
+        clawLeft = hardwareMap.get(Servo.class, "clawLeft");
+        clawRight = hardwareMap.get(Servo.class, "clawRight");
+        clawUp= hardwareMap.get(Servo.class, "clawUp");
 
+
+        Left_Front.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        Right_Front.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        Left_Back.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        Right_Back.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         //initialise wheels
         Right_Back.setDirection(DcMotorSimple.Direction.REVERSE);
         Right_Front.setDirection(DcMotorSimple.Direction.REVERSE);
@@ -63,19 +93,31 @@ public class Drive {
         pinpoint.resetPosAndIMU();
     }
 
-    public void setBrake(boolean x){
-        if (x){
-            Left_Front.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-            Right_Front.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-            Left_Back.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-            Right_Back.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        } else {
-            Left_Front.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
-            Right_Front.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
-            Left_Back.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
-            Right_Back.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+    public void switchUp() {
+        if (upState){
+            clawUp.setPosition(upStart);
+        }
+        else {
+            clawUp.setPosition(upEnd);
         }
     }
+    public void switchLeft() {
+        if (leftState){
+            clawUp.setPosition(leftStart);
+        }
+        else {
+            clawUp.setPosition(leftEnd);
+        }
+    }
+    public void switchRight() {
+        if (rightState){
+            clawUp.setPosition(rightStart);
+        }
+        else {
+            clawUp.setPosition(rightEnd);
+        }
+    }
+
     public void setPower(motorPowers power) {
         this.Left_Front.setPower(power.leftFront);
         this.Right_Front.setPower(power.rightFront);
@@ -91,7 +133,18 @@ public class Drive {
 
     }
 
+    public void spinArm(double power){
+        if (power > 0) {
+            slideMotor.setMode(RUN_USING_ENCODER);
+            slideMotor.setPower(slidePower);
+        } else if (slideMotor.getMode() == RUN_USING_ENCODER){
+            slideMotor.setPower(0);
+        }
+    }
 
+    public void resetArm(){
+        resetMode = true;
+    }
     //resets arm encoder
     public void updateArm() {
         if (resetMode) {
@@ -101,7 +154,8 @@ public class Drive {
                 if (checkTicks > checkCount) {
                     slideMotor.setPower(0);
                     slideMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-                    slideMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+                    slideMotor.setMode(RUN_USING_ENCODER);
+                    resetMode = false;
                 }
             }
             else if (distance > 0.5) {

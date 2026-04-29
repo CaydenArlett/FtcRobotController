@@ -6,6 +6,7 @@ public class Control {
     static double triggerLeft = 0.1;
     static double triggerRight = 0.1;
     static double leftStick = 0.07;
+    static double leftStick2 = 0.07;
     static double rightStick = 0.07;
 
     static double armExtendPos = 20000;
@@ -35,10 +36,18 @@ public class Control {
         if (Math.abs(opMode.gamepad1.right_stick_y) > rightStick || Math.abs(opMode.gamepad1.right_stick_x) > rightStick) {
             rotate += opMode.gamepad1.right_stick_x;
         }
-        if (opMode.gamepad1.y){
-            drive.setBrake(true);
+
+        //switches arm servo states
+        if (opMode.gamepad2.aWasPressed()){
+            drive.switchLeft();
         }
-        // extends arm
+        if (opMode.gamepad2.bWasPressed()){
+            drive.switchRight();
+        }
+        if (opMode.gamepad2.yWasPressed()){
+            drive.switchUp();
+        }
+        //extends arm
         if (opMode.gamepad2.dpad_down && opMode.gamepad2.dpad_right) {
             drive.moveArm(armExtendPos);     // 100%
         } else if (opMode.gamepad2.dpad_right) {
@@ -56,10 +65,20 @@ public class Control {
         } else if (opMode.gamepad2.dpad_down) {
             drive.moveArm(0);                      // 0%
         }
+
+        //extends arm
+        else if (opMode.gamepad2.left_stick_y > leftStick2) {
+            drive.spinArm(opMode.gamepad2.left_stick_y);
+        }
+        else {
+            drive.spinArm(0);
+        }
 //        if (opMode.gamepad1.x){
 //            drive.setMode(false);
 //        }
-        drive.armReset = opMode.gamepad1.a;
+        if (opMode.gamepad2.xWasPressed()){
+            drive.resetArm();
+        }
         return setPower(x, y, rotate);
     }
 
