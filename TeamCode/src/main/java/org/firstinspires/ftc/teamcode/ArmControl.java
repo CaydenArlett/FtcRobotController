@@ -17,7 +17,7 @@ public class ArmControl {
         robot = r;
     }
     public double getLatchPower() {
-        if (opMode.gamepad2.a) {
+        if (opMode.gamepad2.x) {
             latchPower = -0.5;
         } else {
             latchPower = 0;
