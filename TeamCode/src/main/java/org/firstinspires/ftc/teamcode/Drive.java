@@ -1,6 +1,8 @@
 package org.firstinspires.ftc.teamcode;
 
+import static com.qualcomm.robotcore.hardware.DcMotor.RunMode.RUN_TO_POSITION;
 import static com.qualcomm.robotcore.hardware.DcMotor.RunMode.RUN_USING_ENCODER;
+import static com.qualcomm.robotcore.hardware.DcMotor.RunMode.STOP_AND_RESET_ENCODER;
 
 import com.qualcomm.hardware.gobilda.GoBildaPinpointDriver;
 import com.qualcomm.robotcore.hardware.CRServo;
@@ -47,7 +49,7 @@ public class Drive {
 
     private double rightStart = 0;
 
-    private double rightEnd = 0.5;
+    private double rightEnd = 0.22;
 
     private double upStart = 0;
 
@@ -55,7 +57,7 @@ public class Drive {
 
     private double leftStart = 0.5;
 
-    private double leftEnd = 0;
+    private double leftEnd = 0.28;
 
 
 
@@ -84,7 +86,9 @@ public class Drive {
         //initialise wheels
         Right_Back.setDirection(DcMotorSimple.Direction.REVERSE);
         Right_Front.setDirection(DcMotorSimple.Direction.REVERSE);
-        slideMotor.setDirection(DcMotorSimple.Direction.REVERSE);
+
+
+        slideMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         // init odometry
         pinpoint.setOffsets(xDist, yDist, DistanceUnit.MM);
@@ -92,7 +96,7 @@ public class Drive {
         pinpoint.setEncoderDirections(GoBildaPinpointDriver.EncoderDirection.FORWARD, GoBildaPinpointDriver.EncoderDirection.FORWARD);
         pinpoint.resetPosAndIMU();
     }
-
+    double time = 0;
     public void switchUp() {
         if (upState){
             clawUp.setPosition(upStart);
@@ -100,22 +104,25 @@ public class Drive {
         else {
             clawUp.setPosition(upEnd);
         }
+        upState = !upState;
     }
     public void switchLeft() {
         if (leftState){
-            clawUp.setPosition(leftStart);
+            clawLeft.setPosition(leftStart);
         }
         else {
-            clawUp.setPosition(leftEnd);
+            clawLeft.setPosition(leftEnd);
         }
+        leftState = !leftState;
     }
     public void switchRight() {
         if (rightState){
-            clawUp.setPosition(rightStart);
+            clawRight.setPosition(rightStart);
         }
         else {
-            clawUp.setPosition(rightEnd);
+            clawRight.setPosition(rightEnd);
         }
+        rightState = !rightState;
     }
 
     public void setPower(motorPowers power) {
@@ -134,20 +141,22 @@ public class Drive {
     }
 
     public void spinArm(double power){
-        if (power > 0) {
+        if (power > 0 || power < 0) {
             slideMotor.setMode(RUN_USING_ENCODER);
-            slideMotor.setPower(slidePower);
+            slideMotor.setPower(power);
         } else if (slideMotor.getMode() == RUN_USING_ENCODER){
             slideMotor.setPower(0);
+            slideMotor.setMode(STOP_AND_RESET_ENCODER);
         }
     }
 
     public void resetArm(){
-        resetMode = true;
+        //resetMode = true;
     }
     //resets arm encoder
     public void updateArm() {
         if (resetMode) {
+            slideMotor.setMode(RUN_USING_ENCODER);
             this.slideMotor.setPower(-0.2);
             if (distance > 0.7) {
                 checkTicks++;

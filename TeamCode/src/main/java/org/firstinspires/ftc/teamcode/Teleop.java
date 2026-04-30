@@ -15,12 +15,14 @@ public class Teleop extends OpMode {
         arm = new ArmControl(this, bot);
         controller = new Control(this, bot);
     }
+    double x = 0;
     @Override
     public void loop(){
         motorPowers power = controller.getPower();
         bot.setPower(power);
         bot.updateArm();
         bot.spinLatch(arm.getLatchPower());
+        bot.clawRight.setPosition(x);
 //        bot.setClawLeft(arm.getLeftClawPos());
 //        bot.setClawRight(arm.getRightClawPos());
 //        //arm.spin();

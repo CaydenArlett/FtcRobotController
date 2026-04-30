@@ -9,6 +9,8 @@ public class Control {
     static double leftStick2 = 0.07;
     static double rightStick = 0.07;
 
+    static double armPower = 0.1;
+
     static double armExtendPos = 20000;
     private OpMode opMode;
     private Drive drive;
@@ -20,9 +22,6 @@ public class Control {
         double x = 0;
         double y = 0;
         double rotate = 0;
-        if (opMode.gamepad1.left_stick_y < -0.1 || opMode.gamepad1.left_stick_y > 0.1){
-            y+=opMode.gamepad1.left_stick_y;
-        }
         if (opMode.gamepad1.left_bumper){
             rotate --;
         }
@@ -67,8 +66,8 @@ public class Control {
         }
 
         //extends arm
-        else if (opMode.gamepad2.left_stick_y > leftStick2) {
-            drive.spinArm(opMode.gamepad2.left_stick_y);
+        else if (opMode.gamepad2.left_stick_y > leftStick2 || opMode.gamepad2.left_stick_y < -leftStick2) {
+            drive.spinArm(opMode.gamepad2.left_stick_y*armPower);
         }
         else {
             drive.spinArm(0);
