@@ -87,6 +87,7 @@ public class Drive {
         Left_Back.setDirection(DcMotorSimple.Direction.REVERSE);
         Left_Front.setDirection(DcMotorSimple.Direction.REVERSE);
 
+        slideMotor.setDirection(DcMotorSimple.Direction.REVERSE);
 
         slideMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
@@ -180,8 +181,8 @@ public class Drive {
         }
     }
 
-    public void spinLatch(double pos) {
-        Launcher.setPower(pos);
+    public void spinLatch(double pow) {
+        Launcher.setPower(pow);
     }
 //
 //    public void setClawLeft(double pos) { clawLeft.setPosition(pos); }

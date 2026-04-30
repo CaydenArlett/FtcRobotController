@@ -26,6 +26,7 @@ public class Teleop extends OpMode {
         bot.spinLatch(arm.getLatchPower());
         telemetry.addData("Motors", "left front(%.2f), left back(%.2f)", power.leftFront, power.leftBack);
         telemetry.addData("Motors", "right front(%.2f), right back(%.2f)", power.rightFront, power.rightBack);
+        telemetry.addData("latch power: ", arm.getLatchPower());
 //        bot.clawRight.setPosition(x);
 //        bot.setClawLeft(arm.getLeftClawPos());
 //        bot.setClawRight(arm.getRightClawPos());

@@ -67,7 +67,7 @@ public class Control {
 
         //extends arm
         else if (opMode.gamepad2.left_stick_y > leftStick2 || opMode.gamepad2.left_stick_y < -leftStick2) {
-            drive.spinArm(opMode.gamepad2.left_stick_y*armPower);
+            drive.spinArm(-opMode.gamepad2.left_stick_y*armPower);
         }
         else {
             drive.spinArm(0);

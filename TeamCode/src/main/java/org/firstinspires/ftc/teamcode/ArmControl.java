@@ -18,7 +18,7 @@ public class ArmControl {
     }
     public double getLatchPower() {
         if (opMode.gamepad2.x) {
-            latchPower = -0.5;
+            latchPower = 0.5;
         } else {
             latchPower = 0;
         } // if a pressed release else stay clamped
