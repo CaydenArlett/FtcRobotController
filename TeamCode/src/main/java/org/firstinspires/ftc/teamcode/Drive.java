@@ -49,15 +49,15 @@ public class Drive {
 
     private double rightStart = 0;
 
-    private double rightEnd = 0.22;
+    private double rightEnd = 1;
 
     private double upStart = 0;
 
     private double upEnd = 0.5;
 
-    private double leftStart = 0.5;
+    private double leftStart = 0;
 
-    private double leftEnd = 0.28;
+    private double leftEnd = 1;
 
 
 
@@ -84,8 +84,8 @@ public class Drive {
         Left_Back.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         Right_Back.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         //initialise wheels
-        Right_Back.setDirection(DcMotorSimple.Direction.REVERSE);
-        Right_Front.setDirection(DcMotorSimple.Direction.REVERSE);
+        Left_Back.setDirection(DcMotorSimple.Direction.REVERSE);
+        Left_Front.setDirection(DcMotorSimple.Direction.REVERSE);
 
 
         slideMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);

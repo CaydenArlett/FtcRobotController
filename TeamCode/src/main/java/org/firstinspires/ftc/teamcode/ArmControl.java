@@ -17,11 +17,11 @@ public class ArmControl {
         robot = r;
     }
     public double getLatchPower() {
-        if (opMode.gamepad2.x) {
+        if (opMode.gamepad2.a) {
             latchPower = -0.5;
         } else {
             latchPower = 0;
-        } // if x pressed release else stay clamped
+        } // if a pressed release else stay clamped
         return latchPower;
     }
 

@@ -14,6 +14,8 @@ public class Teleop extends OpMode {
         bot = new Drive(hardwareMap);
         arm = new ArmControl(this, bot);
         controller = new Control(this, bot);
+        telemetry.addData("Status", "Initialized");
+
     }
     double x = 0;
     @Override
@@ -22,9 +24,12 @@ public class Teleop extends OpMode {
         bot.setPower(power);
         bot.updateArm();
         bot.spinLatch(arm.getLatchPower());
-        bot.clawRight.setPosition(x);
+        telemetry.addData("Motors", "left front(%.2f), left back(%.2f)", power.leftFront, power.leftBack);
+        telemetry.addData("Motors", "right front(%.2f), right back(%.2f)", power.rightFront, power.rightBack);
+//        bot.clawRight.setPosition(x);
 //        bot.setClawLeft(arm.getLeftClawPos());
 //        bot.setClawRight(arm.getRightClawPos());
 //        //arm.spin();
+
     }
 }
