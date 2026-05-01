@@ -8,7 +8,8 @@ public class Control {
     static double leftStick = 0.07;
     static double leftStick2 = 0.07;
     static double rightStick = 0.07;
-
+    static double triggerLeft2 = 0.07;
+    static double triggerRight2 = 0.07;
     static double armPower = 0.1;
 
     static double armExtendPos = 20000;
@@ -43,8 +44,11 @@ public class Control {
         if (opMode.gamepad2.bWasPressed()){
             drive.switchRight();
         }
-        if (opMode.gamepad2.yWasPressed()){
-            drive.switchUp();
+        if (opMode.gamepad2.left_trigger> triggerLeft2){
+            drive.switchUp(opMode.gamepad2.left_trigger);
+        }
+        if (opMode.gamepad2.right_trigger> triggerRight2) {
+            drive.switchUp(opMode.gamepad2.right_trigger);
         }
         //extends arm
         if (opMode.gamepad2.dpad_down && opMode.gamepad2.dpad_right) {

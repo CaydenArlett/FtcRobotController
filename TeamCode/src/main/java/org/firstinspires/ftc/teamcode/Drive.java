@@ -59,6 +59,7 @@ public class Drive {
 
     private double leftEnd = 1;
 
+    private double pos = 0;
 
 
     public boolean resetMode = false;
@@ -98,14 +99,9 @@ public class Drive {
         pinpoint.resetPosAndIMU();
     }
     double time = 0;
-    public void switchUp() {
-        if (upState){
-            clawUp.setPosition(upStart);
-        }
-        else {
-            clawUp.setPosition(upEnd);
-        }
-        upState = !upState;
+    public void switchUp(double power) {
+        pos += power/15;
+        clawUp.setPosition(pos);
     }
     public void switchLeft() {
         if (leftState){
