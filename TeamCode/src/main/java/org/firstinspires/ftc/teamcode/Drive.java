@@ -101,6 +101,12 @@ public class Drive {
     double time = 0;
     public void switchUp(double power) {
         pos += power/15;
+        if (pos > 1){
+            pos = 1;
+        }
+        if (pos < 0){
+            pos = 0;
+        }
         clawUp.setPosition(pos);
     }
     public void switchLeft() {

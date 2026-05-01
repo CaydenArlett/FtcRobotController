@@ -48,7 +48,7 @@ public class Control {
             drive.switchUp(opMode.gamepad2.left_trigger);
         }
         if (opMode.gamepad2.right_trigger> triggerRight2) {
-            drive.switchUp(opMode.gamepad2.right_trigger);
+            drive.switchUp(-opMode.gamepad2.right_trigger);
         }
         //extends arm
         if (opMode.gamepad2.dpad_down && opMode.gamepad2.dpad_right) {
